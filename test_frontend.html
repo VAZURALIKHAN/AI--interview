@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend API Connection Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .test-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .test-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ddd;
+            transition: all 0.3s;
+        }
+
+        .test-item.testing {
+            border-left-color: #fbbf24;
+            background: #fffbeb;
+        }
+
+        .test-item.success {
+            border-left-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .test-item.error {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .test-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-result {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .status-icon {
+            font-size: 1.25rem;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .summary h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .summary .stats {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .summary .stats.success {
+            color: #10b981;
+        }
+
+        .summary .stats.partial {
+            color: #fbbf24;
+        }
+
+        .summary .stats.error {
+            color: #ef4444;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 Frontend-Backend Connection Test</h1>
+        <p class="subtitle">Testing API connectivity between React frontend and FastAPI backend</p>
+
+        <div class="test-grid" id="testGrid">
+            <!-- Tests will be added here dynamically -->
+        </div>
+
+        <button id="runTestsBtn" onclick="runAllTests()">Run All Tests</button>
+
+        <div class="summary" id="summary" style="display: none;">
+            <h3>Test Summary</h3>
+            <div class="stats" id="summaryStats"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        const tests = [
+            {
+                name: 'Backend Health Check',
+                endpoint: '/health',
+                method: 'GET'
+            },
+            {
+                name: 'Get Current User',
+                endpoint: '/auth/me',
+                method: 'GET'
+            },
+            {
+                name: 'Get All Courses',
+                endpoint: '/courses',
+                method: 'GET'
+            },
+            {
+                name: 'Dashboard Stats',
+                endpoint: '/dashboard/stats',
+                method: 'GET'
+            },
+            {
+                name: 'Gamification Stats',
+                endpoint: '/gamification/stats',
+                method: 'GET'
+            },
+            {
+                name: 'Get FAQs',
+                endpoint: '/faq',
+                method: 'GET'
+            }
+        ];
+
+        function createTestItem(test, index) {
+            return `
+                <div class="test-item" id="test-${index}">
+                    <div class="test-name">
+                        <span class="status-icon" id="icon-${index}">⏸️</span>
+                        <span>${test.name}</span>
+                    </div>
+                    <div class="test-result" id="result-${index}">Ready to test</div>
+                </div>
+            `;
+        }
+
+        function updateTestStatus(index, status, message, icon) {
+            const testItem = document.getElementById(`test-${index}`);
+            const resultDiv = document.getElementById(`result-${index}`);
+            const iconSpan = document.getElementById(`icon-${index}`);
+
+            testItem.className = `test-item ${status}`;
+            resultDiv.textContent = message;
+            iconSpan.textContent = icon;
+        }
+
+        async function runTest(test, index) {
+            updateTestStatus(index, 'testing', 'Testing...', '⏳');
+
+            try {
+                const response = await fetch(`${API_BASE}${test.endpoint}`, {
+                    method: test.method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    let message = `Success! Status: ${response.status}`;
+
+                    // Add specific info based on endpoint
+                    if (test.endpoint === '/courses' && Array.isArray(data)) {
+                        message += ` - Found ${data.length} courses`;
+                    } else if (test.endpoint === '/auth/me') {
+                        message += ` - User: ${data.name}`;
+                    } else if (test.endpoint === '/gamification/stats') {
+                        message += ` - Level ${data.level}, XP: ${data.xp}`;
+                    }
+
+                    updateTestStatus(index, 'success', message, '✅');
+                    return true;
+                } else {
+                    updateTestStatus(index, 'error', `Failed: ${response.status} ${response.statusText}`, '❌');
+                    return false;
+                }
+            } catch (error) {
+                updateTestStatus(index, 'error', `Error: ${error.message}`, '❌');
+                return false;
+            }
+        }
+
+        async function runAllTests() {
+            const button = document.getElementById('runTestsBtn');
+            button.disabled = true;
+            button.textContent = 'Running Tests...';
+
+            const results = [];
+            for (let i = 0; i < tests.length; i++) {
+                const result = await runTest(tests[i], i);
+                results.push(result);
+                await new Promise(resolve => setTimeout(resolve, 300)); // Small delay between tests
+            }
+
+            // Show summary
+            const passed = results.filter(r => r).length;
+            const total = results.length;
+            const summaryDiv = document.getElementById('summary');
+            const statsDiv = document.getElementById('summaryStats');
+
+            summaryDiv.style.display = 'block';
+
+            let statusClass = 'error';
+            let statusText = '❌ Tests Failed';
+
+            if (passed === total) {
+                statusClass = 'success';
+                statusText = '🎉 All Tests Passed!';
+            } else if (passed > 0) {
+                statusClass = 'partial';
+                statusText = '⚠️ Some Tests Failed';
+            }
+
+            statsDiv.className = `stats ${statusClass}`;
+            statsDiv.innerHTML = `${statusText}<br>${passed}/${total} tests passed`;
+
+            button.disabled = false;
+            button.textContent = 'Run Tests Again';
+        }
+
+        // Initialize test grid
+        const testGrid = document.getElementById('testGrid');
+        testGrid.innerHTML = tests.map((test, index) => createTestItem(test, index)).join('');
+    </script>
+</body>
+
+</html>

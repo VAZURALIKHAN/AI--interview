@@ -1,0 +1,105 @@
+.theme-switcher-container {
+    position: relative;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+
+.theme-toggle-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn.active {
+    border-color: var(--primary);
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+}
+
+.theme-menu {
+    position: absolute;
+    bottom: 100%;
+    left: 1rem;
+    right: 1rem;
+    margin-bottom: 0.5rem;
+    z-index: 100;
+    padding: 1rem;
+    width: calc(100% - 2rem);
+    box-shadow: var(--shadow-lg);
+}
+
+.theme-menu-header {
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.theme-menu-header h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.theme-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    width: 100%;
+    text-align: left;
+}
+
+.theme-option:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.theme-option.active {
+    border-color: var(--primary);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.theme-preview {
+    display: flex;
+    gap: 2px;
+}
+
+.color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-name {
+    flex: 1;
+    font-size: 0.85rem;
+}
+
+.check-icon {
+    color: var(--primary);
+}

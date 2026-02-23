@@ -1,0 +1,184 @@
+.tutorial-view {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.tutorial-sidebar {
+    position: sticky;
+    top: 2rem;
+    padding: 1.5rem;
+    height: fit-content;
+}
+
+.tutorial-meta {
+    margin: 1.5rem 0;
+}
+
+.tutorial-meta h2 {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.tutorial-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tutorial-nav a {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.tutorial-nav a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.tutorial-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.content-section {
+    padding: 2.5rem;
+}
+
+.content-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: var(--text-primary);
+}
+
+.concept-item {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 0.5rem;
+    border-left: 3px solid var(--warning);
+}
+
+.formulas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.formula-box {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.formula-box code {
+    font-size: 1.2rem;
+    color: var(--success);
+}
+
+.tutorial-example {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tutorial-example:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.ex-question {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.ex-solution {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+}
+
+.final-ans {
+    margin-top: 1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.tips-list {
+    list-style: none;
+}
+
+.tips-list li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.tips-list li::before {
+    content: '🚀';
+    position: absolute;
+    left: 0;
+}
+
+.topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.topic-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.topic-icon {
+    font-size: 2.5rem;
+}
+
+.category-section {
+    margin-bottom: 3rem;
+}
+
+.cat-title {
+    font-size: 1.5rem;
+    padding-left: 1rem;
+    border-left: 4px solid var(--primary);
+}
+
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+@media (max-width: 1024px) {
+    .tutorial-view {
+        grid-template-columns: 1fr;
+    }
+
+    .tutorial-sidebar {
+        position: relative;
+        top: 0;
+    }
+}

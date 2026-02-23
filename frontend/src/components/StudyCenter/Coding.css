@@ -1,0 +1,180 @@
+.coding-workspace {
+    height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+}
+
+.workspace-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(30, 41, 59, 0.4);
+    border-radius: 1rem;
+}
+
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1.5rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.problem-description {
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+.example-box {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--primary);
+}
+
+.example-box code {
+    color: var(--primary-light);
+}
+
+.schema-box {
+    background: rgba(30, 41, 59, 0.6);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.error-box {
+    border-left-color: var(--error) !important;
+}
+
+.error-box code {
+    color: #fca5a5 !important;
+}
+
+.alert-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.alert-box.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.code-editor-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.editor-header {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.code-editor {
+    flex: 1;
+    background: #0f172a;
+    color: #e2e8f0;
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    padding: 2rem;
+    border: none;
+    resize: none;
+    outline: none;
+    line-height: 1.6;
+}
+
+.editor-footer {
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.opt-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.opt-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.submission-results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+}
+
+.result-card {
+    text-align: center;
+    max-width: 500px;
+    padding: 3rem;
+}
+
+.xp-badge {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--success);
+    background: rgba(34, 197, 94, 0.1);
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+}
+
+.badge-easy {
+    background: var(--success);
+    color: white;
+}
+
+.badge-medium {
+    background: var(--warning);
+    color: white;
+}
+
+.badge-hard {
+    background: var(--error);
+    color: white;
+}
+
+@media (max-width: 1024px) {
+    .workspace-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .coding-workspace {
+        height: auto;
+    }
+}
